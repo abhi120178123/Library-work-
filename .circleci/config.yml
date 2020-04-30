@@ -1,13 +1,62 @@
-# Use the latest 2.1 version of CircleCI pipeline process engine. See: https://circleci.com/docs/2.0/configuration-reference
-version: 2.1
-# Use a package of configuration called an orb.
-orbs:
-  # Declare a dependency on the welcome-orb
-  welcome: circleci/welcome-orb@0.4.1
-# Orchestrate or schedule a set of jobs
-workflows:
-  # Name the workflow "welcome"
-  welcome:
-    # Run the welcome/run job in its own container
-    jobs:
-      - welcome/run
+# create a library class
+#     display book
+#     lend book  (who owns the book if not present)
+#     add book
+#     return book
+class Library:
+    def __init__(self,list,name):
+        self.booksList=list
+        self.name=name
+        self.lendDict={}
+    def displayBooks(self):
+        print(f"We have a following books in library:{self.name}")
+        for book in self.booksList:
+            print(book)
+    def lendBook(self,user,book):
+        if book not in self.lendDict.keys():
+            self.lendDict.update({book:user})
+            print("Lender-Book database has been updated.you can take a book now")
+        else:
+            print(f"Book is already being used by {self.lendDict[book]}")
+
+    def addBook(self,Book):
+        self.booksList.append(book)
+        print("Book has been added to the book list")
+
+    def returnBook(self,book):
+        self.booksList.remove(book)
+
+if __name__ == '__main__':
+    harry=Library(['Python','Rich Daddy poor Daddy','Harry Potter','C++','Algorithms by CLRS'],"CodewithHarry")
+
+while(True):
+    print(f"Welcome to the {harry.name} library.Enter your choice to continue")
+        print("1.Display Book")
+        print("2.Lend a Books")
+        print("3.Add a Book")
+        print("4.Return a Book")
+        user_choice=int(input())
+
+        if user_choice==1:
+            harry.displayBooks()
+        elif user_choice==2:
+            book=input("Entern the name of the book you want to lend:")
+            user=input("Enter your name")
+            harry.landBook(user,book)
+        elif user_choice==3:
+            book = input("Entern the name of the book you want to add:")
+            harry.addBook(book)
+        elif user_choice==4:
+            book = input("Entern the name of the book you want to return:")
+            harry.returnBook(book)
+
+        else:
+            print("Not a valid option")
+            print("press q to quit and c to continue")
+            user_choice2=""
+            while(user_choice2!="c"and user_choice2!="q"):
+             user_choice2=input()
+            if user_choice2=="q":
+                exit()
+            if user_choice2=="c":
+                continue
